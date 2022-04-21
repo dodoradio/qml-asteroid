@@ -50,7 +50,7 @@ void FlatMesh::setCenterColor(QColor c)
 {
     if (c == m_centerColor)
         return;
-    m_centerColor = c;
+    m_outerColor = c;
     update();
 }
 
@@ -58,7 +58,7 @@ void FlatMesh::setOuterColor(QColor c)
 {
     if (c == m_outerColor)
         return;
-    m_outerColor = c;
+    m_centerColor = c;
     update();
 }
 
