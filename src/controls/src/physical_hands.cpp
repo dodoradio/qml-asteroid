@@ -18,7 +18,7 @@ void PhysicalHands::update()
             QTextStream out(&watch_mode_file);
             out << 1;
             watch_mode_file.close();
-            qDebug() << "reset hands to watch mode" << parentItem() << parentItem();
+            qDebug() << "reset hands to watch mode" << parentItem() << parentItem()->objectName();
         } else {
             QFile motor_move_all_file("/sys/devices/sop716/motor_move_all");
             if(!motor_move_all_file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -28,7 +28,7 @@ void PhysicalHands::update()
             QTextStream out(&motor_move_all_file);
             out << m_hourHandTarget << ":" << m_minuteHandTarget;
             motor_move_all_file.close();
-            qDebug() << "moved hands to requested position" << parentItem() << parentItem();
+            qDebug() << "moved hands to requested position" << parentItem();
         }
     }
 }
@@ -65,7 +65,7 @@ void PhysicalHands::setHourHandPosition(int newHourHandPosition)
 //     out << "1:" << m_hourHandTarget;
 //     motor_move_file.close();
     update();
-    qDebug() << "moved hands to requested position" << parentItem() << parentItem();
+    qDebug() << "moved hands to requested position" << parentItem();
 
 }
 
@@ -83,7 +83,7 @@ void PhysicalHands::setMinuteHandPosition(int newMinuteHandPosition)
 //     out << "0:" << m_minuteHandTarget;
 //     motor_move_file.close();
     update();
-    qDebug() << "moved hands to requested position" << parentItem() << parentItem();
+    qDebug() << "moved hands to requested position" << parentItem();
 }
 
 void PhysicalHands::setWatchMode(int newWatchMode = 1)
@@ -99,7 +99,7 @@ void PhysicalHands::setWatchMode(int newWatchMode = 1)
         QTextStream out(&watch_mode_file);
         out << 1;
         watch_mode_file.close();
-        qDebug() << "reset hands to watch mode" << parentItem() << parentItem();
+        qDebug() << "reset hands to watch mode" << parentItem();
     }
 }
 
@@ -109,7 +109,7 @@ void PhysicalHands::setHourHandPositionStealth(int newHourHandPosition)
     m_hourHandTarget = newHourHandPosition;
     qDebug() << "hourHandTarget = " << m_hourHandTarget;
     update();
-    qDebug() << "queued hands move request" << parentItem() << parentItem();
+    qDebug() << "queued hands move request" << parentItem();
 }
 
 void PhysicalHands::setMinuteHandPositionStealth(int newMinuteHandPosition)
@@ -118,7 +118,7 @@ void PhysicalHands::setMinuteHandPositionStealth(int newMinuteHandPosition)
     m_minuteHandTarget = newMinuteHandPosition;
     qDebug() << "minuteHandTarget = " << m_minuteHandTarget;
     update();
-    qDebug() << "queued hands move request" << parentItem() << parentItem();
+    qDebug() << "queued hands move request" << parentItem();
 }
 
 void PhysicalHands::setWatchModeStealth(int newWatchMode = 1)
@@ -138,7 +138,7 @@ void PhysicalHands::setWatchModeStealth(int newWatchMode = 1)
             watch_mode_file.close();
         }
     }
-    qDebug() << "queued watch mode change" << parentItem() << parentItem();
+    qDebug() << "queued watch mode change" << parentItem();
 }
 
 
