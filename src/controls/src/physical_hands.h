@@ -64,17 +64,13 @@ public:
     void setWatchMode(int);
     int watchMode();
 
-    //void setVisible(bool);
-
-    //bool visible();
-
     void setHourHandPositionStealth(int);
     void setMinuteHandPositionStealth(int);
 
     void setWatchModeStealth(int);
 
-    //void paint(QPainter *painter) override;
-    //void setEffectiveVisibleRecur(bool);
+    Q_INVOKABLE void calibrate(QString);
+
     void update();
 
 signals:
@@ -83,7 +79,6 @@ signals:
 
     void watchModeChanged();
 
-    //void visibleChanged();
 protected:
     void itemChange(ItemChange change, const ItemChangeData &data) override;
 
