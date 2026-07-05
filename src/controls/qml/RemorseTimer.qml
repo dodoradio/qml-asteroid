@@ -30,6 +30,7 @@
 
 import QtQuick
 import org.asteroid.controls
+import org.asteroid.utils
 
 /*!
     \qmltype RemorseTimer
@@ -147,55 +148,65 @@ Rectangle {
         onTriggered: remorseTimer.countdownSeconds--
     }
 
-    SegmentedArc {
-        id: countdownArc
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
-        }
-        width: Dims.l(22)
-        height: width
-        segmentAmount: remorseTimer.gaugeSegmentAmount
-        inputValue: remorseTimer.arcValue
-        fgColor: "#ffffff"
-        bgColor: Qt.rgba(1, 1, 1, 0.2)
-        start: remorseTimer.gaugeStartDegree
-        endFromStart: remorseTimer.gaugeEndFromStartDegree
-    }
+    // Content is sized against a centered square (the shorter screen edge)
+    // instead of Dims, so it stays correct on non-square screens and when the
+    // parent is not full-screen.
+    Item {
+        id: gaugeArea
+        anchors.centerIn: parent
+        height: Math.min(parent.width, parent.height + DeviceSpecs.flatTireHeight)
+        width: height
 
-    Label {
-        id: countdownLabel
-        anchors.centerIn: countdownArc
-        font {
-            pixelSize: Dims.l(18)
-            styleName: "SemiBoldCondensed"
+        SegmentedArc {
+            id: countdownArc
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+            }
+            width: parent.width * 0.22
+            height: width
+            segmentAmount: remorseTimer.gaugeSegmentAmount
+            inputValue: remorseTimer.arcValue
+            fgColor: "#ffffff"
+            bgColor: Qt.rgba(1, 1, 1, 0.2)
+            start: remorseTimer.gaugeStartDegree
+            endFromStart: remorseTimer.gaugeEndFromStartDegree
         }
-        color: "#ffffff"
-        text: remorseTimer.countdownSeconds
-        z: countdownArc.z + 1
-    }
 
-    Label {
-        id: actionLabel
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: countdownArc.top
-            bottomMargin: Dims.l(1)
+        Label {
+            id: countdownLabel
+            anchors.centerIn: countdownArc
+            font {
+                pixelSize: parent.width * 0.18
+                styleName: "SemiBoldCondensed"
+            }
+            color: "#ffffff"
+            text: remorseTimer.countdownSeconds
+            z: countdownArc.z + 1
         }
-        font.pixelSize: Dims.l(6)
-        color: "#ffffff"
-        text: action
-    }
 
-    Label {
-        id: cancelLabel
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: countdownArc.bottom
-            topMargin: Dims.l(1)
+        Label {
+            id: actionLabel
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: countdownArc.top
+                bottomMargin: parent.width * 0.01
+            }
+            font.pixelSize: parent.width * 0.06
+            color: "#ffffff"
+            text: action
         }
-        font.pixelSize: Dims.l(6)
-        color: "#ffffff"
+
+        Label {
+            id: cancelLabel
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: countdownArc.bottom
+                topMargin: parent.width * 0.01
+            }
+            font.pixelSize: parent.width * 0.06
+            color: "#ffffff"
+        }
     }
 
     MouseArea {
